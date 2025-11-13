@@ -8,7 +8,8 @@
 
 ---
 <img width="1910" height="923" alt="image" src="https://github.com/user-attachments/assets/b1d970b2-903a-4b55-9559-c49a00eb8c65" />
-![f68fe0ebced301fc86edb07d0be4c37d](https://github.com/user-attachments/assets/745789c5-f55d-4283-bbea-95df244a5c02)
+<img width="1029" height="748" alt="image" src="https://github.com/user-attachments/assets/c3a42526-d1ad-4e7c-bb68-ec1b44298a6b" />
+
 
 ## 🌟 项目特点
 
