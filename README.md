@@ -168,7 +168,7 @@
 - 或 Go 1.24+（本地运行）
 - TDX股票数据API服务
 - DeepSeek 或 Qwen API密钥
-
+- docker本地部署tdxapi，项目地址https://github.com/oficcejo/tdx-api
 ---
 
 ## 🐳 Docker部署（推荐）
@@ -176,8 +176,8 @@
 ### 1️⃣ 克隆项目
 
 ```bash
-git clone https://github.com/your-repo/nofx-stock.git
-cd nofx-stock
+git clone https://github.com/oficcejo/ai-ding-stock.git
+cd ai-ding-stock
 ```
 
 ### 2️⃣ 配置系统
