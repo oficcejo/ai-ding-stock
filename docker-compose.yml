@@ -1,0 +1,71 @@
+services:
+  # 股票分析后端服务
+  stock-analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: stock-analyzer
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - "8080:9090"  # host模式不需要端口映射
+    volumes:
+      # 挂载配置文件（必须，可读写以支持Web配置保存）
+      - ./config_stock.json:/app/config_stock.json
+      # 挂载日志目录
+      - ./stock_analysis_logs:/app/stock_analysis_logs
+      # 挂载Web前端文件
+      - ./web:/app/web
+      # 挂载时区（可选）
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=Asia/Shanghai
+      - LOG_LEVEL=info
+    # networks:
+    #   - stock-network  # host模式不需要自定义网络
+    # healthcheck:
+    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/stocks"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Web前端服务（Nginx）
+  stock-web:
+    image: nginx:1.25-alpine
+    container_name: stock-web
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - "8090:80"  # host模式不需要端口映射，nginx配置中监听8090
+    volumes:
+      # 挂载Web文件（去掉ro让nginx可以读取）
+      - ./web:/usr/share/nginx/html
+      # 挂载Nginx配置
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    # networks:
+    #   - stock-network  # host模式不需要自定义网络
+    # depends_on:
+    #   - stock-analyzer  # host模式下不需要depends_on
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+networks:
+  stock-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  logs:
+    driver: local
+

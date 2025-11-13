@@ -1,0 +1,55 @@
+{
+  "tdx_api_url": "http://localhost:8181",
+  "ai_config": {
+    "provider": "deepseek",
+    "deepseek_key": "sk-your-deepseek-api-key",
+    "qwen_key": "",
+    "custom_api_url": "",
+    "custom_api_key": "",
+    "custom_model_name": ""
+  },
+  "stocks": [
+    {
+      "code": "000001",
+      "name": "平安银行",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    },
+    {
+      "code": "600519",
+      "name": "贵州茅台",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    },
+    {
+      "code": "000858",
+      "name": "五粮液",
+      "enabled": false,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    }
+  ],
+  "notification": {
+    "enabled": true,
+    "dingtalk": {
+      "enabled": true,
+      "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=YOUR_TOKEN",
+      "secret": ""
+    },
+    "feishu": {
+      "enabled": true,
+      "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_TOKEN",
+      "secret": ""
+    }
+  },
+  "trading_time": {
+    "enable_check": true,
+    "trading_hours": ["09:30-11:30", "13:00-15:00"],
+    "timezone": "Asia/Shanghai"
+  },
+  "api_server_port": 9090,
+  "log_dir": "stock_analysis_logs"
+}
+

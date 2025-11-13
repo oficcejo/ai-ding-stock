@@ -1,0 +1,62 @@
+{
+  "tdx_api_url": "http://192.168.1.222:8181",
+  "ai_config": {
+    "provider": "deepseek",
+    "deepseek_key": "sk-e32f576c15884563bcb6e05c30d32abe",
+    "qwen_key": "sk-93995bc82bc046d7ad76eb8f0e7c6540",
+    "custom_api_url": "https://api.longcat.chat/openai",
+    "custom_api_key": "ak_1yJ65v8XG9Ty3tv95a3Jv3Lp2zs3B",
+    "custom_model_name": "LongCat-Flash-Thinking"
+  },
+  "stocks": [
+    {
+      "code": "000969",
+      "name": "安泰科技",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    },
+    {
+      "code": "600219",
+      "name": "南山铝业",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    },
+    {
+      "code": "300724",
+      "name": "捷佳伟创",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    },
+    {
+      "code": "300438",
+      "name": "鹏辉能源",
+      "enabled": true,
+      "scan_interval_minutes": 5,
+      "min_confidence": 70
+    }
+  ],
+  "notification": {
+    "enabled": true,
+    "dingtalk": {
+      "enabled": true,
+      "webhook_url": "https://oapi.dingtalk.com/robot/send?access_token=aeef99d7674947f84117f5d733cccda2fef250f7c2b600f99bb62225604792ba",
+      "secret": "aiagents通知"
+    },
+    "feishu": {
+      "enabled": true,
+      "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/YOUR_TOKEN",
+      "secret": ""
+    }
+  },
+  "trading_time": {
+    "enable_check": true,
+    "trading_hours": ["09:30-11:30", "13:00-15:00"],
+    "timezone": "Asia/Shanghai"
+  },
+  "api_server_port": 9090,
+  "log_dir": "stock_analysis_logs"
+}
+

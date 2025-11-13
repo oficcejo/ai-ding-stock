@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI股票分析系统 - 配置管理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 .emoji {
+            font-size: 40px;
+            margin-right: 15px;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .config-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group small {
+            display: block;
+            color: #999;
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .stock-list {
+            margin-top: 20px;
+        }
+
+        .stock-item {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .stock-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stock-item-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .btn-remove {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .btn-remove:hover {
+            background: #ff3838;
+        }
+
+        .btn-add {
+            background: #5cb85c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            background: #4cae4c;
+        }
+
+        .btn-save {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-save:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-save:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .save-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="emoji">⚙️</span>
+                AI股票分析系统 - 配置管理
+            </h1>
+            <p class="subtitle">在线配置系统参数，无需手动编辑JSON文件</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <div id="loadingContainer" class="config-panel loading">
+            <p>⏳ 正在加载配置...</p>
+        </div>
+
+        <div id="configContainer" style="display: none;">
+            <!-- TDX API配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">📡 TDX API配置</h2>
+                <div class="form-group">
+                    <label for="tdx_api_url">TDX API地址</label>
+                    <input type="text" id="tdx_api_url" placeholder="http://192.168.1.222:8181">
+                    <small>通达信股票数据API服务地址</small>
+                </div>
+            </div>
+
+            <!-- AI配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">🤖 AI模型配置</h2>
+                <div class="form-group">
+                    <label for="ai_provider">AI提供商</label>
+                    <select id="ai_provider" onchange="toggleAIConfig()">
+                        <option value="deepseek">DeepSeek（推荐）</option>
+                        <option value="qwen">Qwen（通义千问）</option>
+                        <option value="custom">自定义API</option>
+                    </select>
+                    <small>选择AI分析引擎</small>
+                </div>
+
+                <div id="deepseek_config" class="form-group">
+                    <label for="deepseek_key">DeepSeek API密钥</label>
+                    <input type="password" id="deepseek_key" placeholder="sk-xxx">
+                    <small>从 https://platform.deepseek.com 获取</small>
+                </div>
+
+                <div id="qwen_config" class="form-group" style="display: none;">
+                    <label for="qwen_key">Qwen API密钥</label>
+                    <input type="password" id="qwen_key" placeholder="sk-xxx">
+                    <small>从 https://dashscope.aliyun.com 获取</small>
+                </div>
+
+                <div id="custom_config" style="display: none;">
+                    <div class="form-group">
+                        <label for="custom_api_url">自定义API地址</label>
+                        <input type="text" id="custom_api_url" placeholder="https://api.openai.com/v1">
+                        <small>兼容OpenAI格式的API基础地址</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom_api_key">自定义API密钥</label>
+                        <input type="password" id="custom_api_key" placeholder="sk-xxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="custom_model_name">模型名称</label>
+                        <input type="text" id="custom_model_name" placeholder="gpt-4o">
+                        <small>例如: gpt-4o, claude-3-5-sonnet-20241022</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 股票配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">📊 监控股票配置</h2>
+                <div id="stockList" class="stock-list"></div>
+                <button class="btn-add" onclick="addStock()">➕ 添加股票</button>
+            </div>
+
+            <!-- 通知配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">🔔 通知配置</h2>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="notification_enabled">
+                    <label for="notification_enabled">启用通知系统</label>
+                </div>
+
+                <div id="notification_settings">
+                    <h3 style="margin: 20px 0 15px 0; font-size: 16px; color: #555;">钉钉通知</h3>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="dingtalk_enabled">
+                        <label for="dingtalk_enabled">启用钉钉通知</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="dingtalk_webhook">钉钉Webhook地址</label>
+                        <input type="text" id="dingtalk_webhook" placeholder="https://oapi.dingtalk.com/robot/send?access_token=xxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="dingtalk_secret">钉钉Secret（可选）</label>
+                        <input type="text" id="dingtalk_secret" placeholder="aiagents通知">
+                    </div>
+
+                    <h3 style="margin: 20px 0 15px 0; font-size: 16px; color: #555;">飞书通知</h3>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="feishu_enabled">
+                        <label for="feishu_enabled">启用飞书通知</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="feishu_webhook">飞书Webhook地址</label>
+                        <input type="text" id="feishu_webhook" placeholder="https://open.feishu.cn/open-apis/bot/v2/hook/xxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="feishu_secret">飞书Secret（可选）</label>
+                        <input type="text" id="feishu_secret">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交易时间配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">⏰ 交易时间配置</h2>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="trading_time_enable">
+                    <label for="trading_time_enable">启用交易时间检查</label>
+                    <small style="margin-left: 30px;">启用后仅在交易时段进行分析</small>
+                </div>
+                <div class="form-group">
+                    <label for="trading_hours">交易时段</label>
+                    <input type="text" id="trading_hours" placeholder='["09:30-11:30", "13:00-15:00"]'>
+                    <small>JSON数组格式，多个时段用逗号分隔</small>
+                </div>
+                <div class="form-group">
+                    <label for="timezone">时区</label>
+                    <input type="text" id="timezone" placeholder="Asia/Shanghai">
+                </div>
+            </div>
+
+            <!-- 系统配置 -->
+            <div class="config-panel">
+                <h2 class="section-title">🔧 系统配置</h2>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="api_server_port">API服务端口</label>
+                        <input type="number" id="api_server_port" placeholder="9090">
+                    </div>
+                    <div class="form-group">
+                        <label for="log_dir">日志目录</label>
+                        <input type="text" id="log_dir" placeholder="stock_analysis_logs">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 保存按钮 -->
+            <div class="config-panel save-section">
+                <button class="btn-save" onclick="saveConfig()">💾 保存配置</button>
+                <p style="margin-top: 15px; color: #999; font-size: 14px;">
+                    ⚠️ 保存后需要重启程序才能生效
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentConfig = null;
+
+        // 页面加载时获取配置
+        window.onload = function() {
+            loadConfig();
+        };
+
+        // 加载配置
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/config');
+                const result = await response.json();
+
+                if (result.code === 0) {
+                    currentConfig = result.data;
+                    populateForm(currentConfig);
+                    document.getElementById('loadingContainer').style.display = 'none';
+                    document.getElementById('configContainer').style.display = 'block';
+                } else {
+                    showAlert('error', '加载配置失败: ' + result.message);
+                }
+            } catch (error) {
+                showAlert('error', '加载配置失败: ' + error.message);
+            }
+        }
+
+        // 填充表单
+        function populateForm(config) {
+            // TDX API
+            document.getElementById('tdx_api_url').value = config.tdx_api_url || '';
+
+            // AI配置
+            document.getElementById('ai_provider').value = config.ai_config?.provider || 'deepseek';
+            document.getElementById('deepseek_key').value = config.ai_config?.deepseek_key || '';
+            document.getElementById('qwen_key').value = config.ai_config?.qwen_key || '';
+            document.getElementById('custom_api_url').value = config.ai_config?.custom_api_url || '';
+            document.getElementById('custom_api_key').value = config.ai_config?.custom_api_key || '';
+            document.getElementById('custom_model_name').value = config.ai_config?.custom_model_name || '';
+            toggleAIConfig();
+
+            // 股票列表
+            renderStockList(config.stocks || []);
+
+            // 通知配置
+            document.getElementById('notification_enabled').checked = config.notification?.enabled || false;
+            document.getElementById('dingtalk_enabled').checked = config.notification?.dingtalk?.enabled || false;
+            document.getElementById('dingtalk_webhook').value = config.notification?.dingtalk?.webhook_url || '';
+            document.getElementById('dingtalk_secret').value = config.notification?.dingtalk?.secret || '';
+            document.getElementById('feishu_enabled').checked = config.notification?.feishu?.enabled || false;
+            document.getElementById('feishu_webhook').value = config.notification?.feishu?.webhook_url || '';
+            document.getElementById('feishu_secret').value = config.notification?.feishu?.secret || '';
+
+            // 交易时间
+            document.getElementById('trading_time_enable').checked = config.trading_time?.enable_check || false;
+            document.getElementById('trading_hours').value = JSON.stringify(config.trading_time?.trading_hours || ["09:30-11:30", "13:00-15:00"]);
+            document.getElementById('timezone').value = config.trading_time?.timezone || 'Asia/Shanghai';
+
+            // 系统配置
+            document.getElementById('api_server_port').value = config.api_server_port || 9090;
+            document.getElementById('log_dir').value = config.log_dir || 'stock_analysis_logs';
+        }
+
+        // 切换AI配置显示
+        function toggleAIConfig() {
+            const provider = document.getElementById('ai_provider').value;
+            document.getElementById('deepseek_config').style.display = provider === 'deepseek' ? 'block' : 'none';
+            document.getElementById('qwen_config').style.display = provider === 'qwen' ? 'block' : 'none';
+            document.getElementById('custom_config').style.display = provider === 'custom' ? 'block' : 'none';
+        }
+
+        // 渲染股票列表
+        function renderStockList(stocks) {
+            const container = document.getElementById('stockList');
+            container.innerHTML = '';
+
+            stocks.forEach((stock, index) => {
+                const stockItem = document.createElement('div');
+                stockItem.className = 'stock-item';
+                stockItem.innerHTML = `
+                    <div class="stock-item-header">
+                        <div class="stock-item-title">股票 #${index + 1}</div>
+                        <button class="btn-remove" onclick="removeStock(${index})">删除</button>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>股票代码</label>
+                            <input type="text" class="stock-code" data-index="${index}" value="${stock.code || ''}" placeholder="000001">
+                        </div>
+                        <div class="form-group">
+                            <label>股票名称</label>
+                            <input type="text" class="stock-name" data-index="${index}" value="${stock.name || ''}" placeholder="平安银行">
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>扫描间隔（分钟）</label>
+                            <input type="number" class="stock-interval" data-index="${index}" value="${stock.scan_interval_minutes || 5}" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label>最小信心度（%）</label>
+                            <input type="number" class="stock-confidence" data-index="${index}" value="${stock.min_confidence || 70}" placeholder="70">
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" class="stock-enabled" data-index="${index}" ${stock.enabled ? 'checked' : ''}>
+                        <label>启用此股票</label>
+                    </div>
+                `;
+                container.appendChild(stockItem);
+            });
+        }
+
+        // 添加股票
+        function addStock() {
+            if (!currentConfig.stocks) {
+                currentConfig.stocks = [];
+            }
+            currentConfig.stocks.push({
+                code: '',
+                name: '',
+                enabled: true,
+                scan_interval_minutes: 5,
+                min_confidence: 70
+            });
+            renderStockList(currentConfig.stocks);
+        }
+
+        // 删除股票
+        function removeStock(index) {
+            if (confirm('确定要删除这只股票吗？')) {
+                currentConfig.stocks.splice(index, 1);
+                renderStockList(currentConfig.stocks);
+            }
+        }
+
+        // 收集表单数据
+        function collectFormData() {
+            const config = {
+                tdx_api_url: document.getElementById('tdx_api_url').value,
+                ai_config: {
+                    provider: document.getElementById('ai_provider').value,
+                    deepseek_key: document.getElementById('deepseek_key').value,
+                    qwen_key: document.getElementById('qwen_key').value,
+                    custom_api_url: document.getElementById('custom_api_url').value,
+                    custom_api_key: document.getElementById('custom_api_key').value,
+                    custom_model_name: document.getElementById('custom_model_name').value
+                },
+                stocks: [],
+                notification: {
+                    enabled: document.getElementById('notification_enabled').checked,
+                    dingtalk: {
+                        enabled: document.getElementById('dingtalk_enabled').checked,
+                        webhook_url: document.getElementById('dingtalk_webhook').value,
+                        secret: document.getElementById('dingtalk_secret').value
+                    },
+                    feishu: {
+                        enabled: document.getElementById('feishu_enabled').checked,
+                        webhook_url: document.getElementById('feishu_webhook').value,
+                        secret: document.getElementById('feishu_secret').value
+                    }
+                },
+                trading_time: {
+                    enable_check: document.getElementById('trading_time_enable').checked,
+                    trading_hours: JSON.parse(document.getElementById('trading_hours').value || '["09:30-11:30", "13:00-15:00"]'),
+                    timezone: document.getElementById('timezone').value
+                },
+                api_server_port: parseInt(document.getElementById('api_server_port').value) || 9090,
+                log_dir: document.getElementById('log_dir').value
+            };
+
+            // 收集股票数据
+            const stockCodes = document.querySelectorAll('.stock-code');
+            stockCodes.forEach((input, index) => {
+                config.stocks.push({
+                    code: input.value,
+                    name: document.querySelector(`.stock-name[data-index="${index}"]`).value,
+                    enabled: document.querySelector(`.stock-enabled[data-index="${index}"]`).checked,
+                    scan_interval_minutes: parseInt(document.querySelector(`.stock-interval[data-index="${index}"]`).value) || 5,
+                    min_confidence: parseInt(document.querySelector(`.stock-confidence[data-index="${index}"]`).value) || 70
+                });
+            });
+
+            return config;
+        }
+
+        // 保存配置
+        async function saveConfig() {
+            const config = collectFormData();
+
+            // 验证配置
+            if (!config.tdx_api_url) {
+                showAlert('error', 'TDX API地址不能为空');
+                return;
+            }
+
+            if (config.stocks.length === 0) {
+                showAlert('error', '至少需要配置一只股票');
+                return;
+            }
+
+            // 验证股票代码和名称
+            for (let i = 0; i < config.stocks.length; i++) {
+                if (!config.stocks[i].code) {
+                    showAlert('error', `股票 #${i + 1} 的代码不能为空`);
+                    return;
+                }
+                if (!config.stocks[i].name) {
+                    showAlert('error', `股票 #${i + 1} 的名称不能为空`);
+                    return;
+                }
+            }
+
+            // 验证AI配置
+            if (config.ai_config.provider === 'deepseek' && !config.ai_config.deepseek_key) {
+                showAlert('error', 'DeepSeek API密钥不能为空');
+                return;
+            }
+            if (config.ai_config.provider === 'qwen' && !config.ai_config.qwen_key) {
+                showAlert('error', 'Qwen API密钥不能为空');
+                return;
+            }
+            if (config.ai_config.provider === 'custom') {
+                if (!config.ai_config.custom_api_url || !config.ai_config.custom_api_key || !config.ai_config.custom_model_name) {
+                    showAlert('error', '自定义API配置不完整');
+                    return;
+                }
+            }
+
+            // 发送保存请求
+            try {
+                const button = document.querySelector('.btn-save');
+                button.disabled = true;
+                button.textContent = '⏳ 保存中...';
+
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+
+                const result = await response.json();
+
+                if (result.code === 0) {
+                    showAlert('success', result.message);
+                    currentConfig = config;
+                } else {
+                    showAlert('error', '保存失败: ' + result.message);
+                }
+
+                button.disabled = false;
+                button.textContent = '💾 保存配置';
+            } catch (error) {
+                showAlert('error', '保存失败: ' + error.message);
+                const button = document.querySelector('.btn-save');
+                button.disabled = false;
+                button.textContent = '💾 保存配置';
+            }
+        }
+
+        // 显示提示信息
+        function showAlert(type, message) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            container.innerHTML = '';
+            container.appendChild(alert);
+
+            // 3秒后自动消失
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transition = 'opacity 0.5s';
+                setTimeout(() => alert.remove(), 500);
+            }, 3000);
+
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+
