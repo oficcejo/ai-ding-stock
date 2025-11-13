@@ -7,6 +7,7 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://www.docker.com/)
 
 ---
+<img width="1910" height="923" alt="image" src="https://github.com/user-attachments/assets/b1d970b2-903a-4b55-9559-c49a00eb8c65" />
 
 ## 🌟 项目特点
 
@@ -190,7 +191,7 @@ cp config_stock.json.example config_stock.json
 nano config_stock.json
 ```
 
-**最小配置**：
+**最小配置**：(也可部署完成进入http://ip:9090配置）
 
 ```json
 {
