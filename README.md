@@ -296,8 +296,8 @@ go version
 ### 2️⃣ 下载项目
 
 ```bash
-git clone https://github.com/your-repo/nofx-stock.git
-cd nofx-stock
+git clone https://github.com/oficcejo/ai-ding-stock.git
+cd oficcejo/ai-ding-stock
 ```
 
 ### 3️⃣ 安装依赖
@@ -755,7 +755,7 @@ sudo lsof -i :9090
 ### 项目结构
 
 ```
-nofx-stock/
+oficcejo/ai-ding-stock/
 ├── main_stock.go           # 主程序入口
 ├── config_stock.json       # 配置文件
 ├── go.mod                  # Go模块定义
@@ -885,8 +885,8 @@ func (w *WeChatNotifier) SendSignal(signal *TradingSignal) error {
 
 ## 💬 支持
 
-- **问题反馈**: [GitHub Issues](https://github.com/your-repo/nofx-stock/issues)
-- **功能建议**: [GitHub Discussions](https://github.com/your-repo/nofx-stock/discussions)
+- **问题反馈**: [GitHub Issues](https://github.com/oficcejo/ai-ding-stock/issues)
+- **功能建议**: [GitHub Discussions](https://github.com/oficcejo/ai-ding-stock/discussions)
 
 ---
 
@@ -908,4 +908,4 @@ func (w *WeChatNotifier) SendSignal(signal *TradingSignal) error {
 
 ---
 
-**Made with ❤️ by NOFX Team**
+**Made with ❤️ by oficcejo/ai-ding-stock Team**
